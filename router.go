@@ -49,12 +49,12 @@ func (r *Router) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 		Param: make(map[string]string, 0),
 		fs:  r.fs,
 	}
-	if strings.Contains(req.RequestURI, ":") {
+	if strings.Contains(req.URL.Path, ":") {
 		NotFound(c)
 		return
 	}
 	//获取路径节点集
-	patterns := strings.Split(req.RequestURI, "/")[1:]
+	patterns := strings.Split(req.URL.Path, "/")[1:]
 	patterns[len(patterns)-1] = req.Method + ":" + patterns[len(patterns)-1]
 	//遍历root的中间变量
 	temp := r
